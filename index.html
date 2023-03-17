@@ -2,20 +2,48 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Vanilla</title>
+        <title>Test Web App</title>
 
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="https://scoutkirkolson.github.io/building-a-reusable-vue-web-component/dist/my-component.standalone.min.js"></script>
+        <script src="app.js"></script>
+        <script type="module" src="https://scoutkirkolson.github.io/vite-current-time-component/vite-current-time.es.js?id=34345"></script>
     </head>
     <body>
-        <div id="app"></div>
-        <div id="calendar"></div>
+        <current-time id="currentTimeDisplay">
+          <span slot="prefix">Current date and time: </span>
+        </current-time>
+        <current-time id="curr2" time-zone="Europe/Amsterdam">
+          <span slot="prefix">Amsterdam time: </span>
+        </current-time>
+        <div class="current-time-component">
+         Hallo allemaal wat fijn dat je er bent
+        </div>
+        <button onclick="myClick('Europe/Amsterdam')">
+        Amsterdam
+        </button>
 
-        <my-component
-          id="comp1"
-          initial-count="20">
-        </my-component>
+        <button onclick="myClick('Singapore')">
+        Singapore
+        </button>
 
-        <script src="./app.js"></script>
+        <button onclick="myClick('Europe/London')">
+        London
+        </button>
+
+        <button onclick="">
+        London
+        </button>
+
+        <script>
+            const myClick = (timezone) => {
+                const event = new CustomEvent('timezonechange', {
+                    bubbles: true,
+                    cancelable: false,
+                    composed: true,
+                    detail: {timeZone: timezone }
+                });
+                document.querySelector('#currentTimeDisplay').dispatchEvent(event);
+                console.log('dispatched')
+            }
+	  </script>
     </body>
 </html>
